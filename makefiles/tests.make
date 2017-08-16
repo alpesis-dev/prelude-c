@@ -1,5 +1,15 @@
-# ------------------------------------------------------------------------------------------------
 # tests
+# ----------------------------------------------------------------------------
+# compiler
+
+TESTS_CFLAGS = $(CC_CFLAGS) \
+               -I$(BUILD_UNITY_DIR)
+
+TESTS_LDFLAGS = $(CC_LDFLAGS) \
+                -L$(BUILD_UNITY_DIR) -lunity
+
+# ----------------------------------------------------------------------------
+# commands
 
 TESTS_SOURCES := $(wildcard $(TESTS_DIR)/*.c)
 TESTS_OBJECTS := $(patsubst %, $(BUILD_TESTS_DIR)/%, $(notdir $(TESTS_SOURCES:.c=.o)))
@@ -15,9 +25,9 @@ build_tests: $(TESTS_TARGETS)
 
 $(BUILD_TESTS_DIR)/% : $(BUILD_TESTS_DIR)/%.o
 	@echo "$(RED)Linking $@ $(NC)"
-	$(CC) $(CC_CFLAGS) -o $@ $^ $(SRC_OBJECTS) $(CC_LDFLAGS)
+	$(CC) -o $@ $^ $(SRC_OBJECTS) $(TESTS_CFLAGS) $(TESTS_LDFLAGS)
 
 $(BUILD_TESTS_DIR)/%.o : $(TESTS_DIR)/%.c
 	@echo "$(RED)Compiling $< $(NC)"
-	$(CC) $(CC_CFLAGS) -c $< -o $@
+	$(CC) -c $< -o $@ $(TESTS_CFLAGS)
 

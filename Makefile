@@ -47,6 +47,7 @@ NC = \033[1;0m
 init:
 	mkdir -p $(BUILD_DIR)
 	mkdir -p $(BUILD_LIB_DIR)
+	mkdir -p $(BUILD_UNITY_DIR)
 	mkdir -p $(BUILD_INC_DIR)
 	mkdir -p $(BUILD_SRC_DIR)
 	mkdir -p $(BUILD_TESTS_DIR)
